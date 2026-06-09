@@ -107,7 +107,9 @@ class PricelistEUR(BasePricelist):
         self.first_page = page_start
         self.logo_path = os.path.join(base_dir, self.LOGO_FILENAME)
         
-        self.db_conn = pyodbc.connect('DSN=Aliplast;UID=PLRAP;PWD=Ali18RAP')
+        from config import get_config_value
+        db_string = get_config_value("DB_CONNECTION_STRING")
+        self.db_conn = pyodbc.connect(db_string)
 
     def fetch_data(self, query_template):
         query = query_template.replace('{n}', str(self.PRICELIST_NUMBER))
